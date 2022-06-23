@@ -1,5 +1,5 @@
 defmodule UbaxWeb.Resolvers.Event do
-  alias Ubax.Meta.Events
+  alias Ubax.Data.Events
 
   def list_events(_parent, args, _resolution) do
     {:ok, Events.list_events(args)}

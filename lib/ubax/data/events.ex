@@ -1,4 +1,4 @@
-defmodule Ubax.Meta.Events do
+defmodule Ubax.Data.Events do
   import Ecto.Query
 
   alias Ubax.{Repo, Event}

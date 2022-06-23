@@ -14,6 +14,14 @@ defmodule UbaxWeb.Router do
     plug :accepts, ["json"]
   end
 
+  scope "/" do
+    pipe_through :api
+
+    forward "/api", Absinthe.Plug, schema: UbaxWeb.Schema
+
+    forward "/graphiql", Absinthe.Plug.GraphiQL, schema: UbaxWeb.Schema
+  end
+
   scope "/", UbaxWeb do
     pipe_through :browser
 

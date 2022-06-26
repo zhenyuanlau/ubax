@@ -8,14 +8,15 @@ defmodule UbaxWeb.Schema.Mutation.CreateEventTest do
   @query """
   mutation ($input: EventInput!) {
     createEvent(input: $input) {
-      event
+      event {
+        name
+      }
     }
   }
   """
   test "createEvent field creates an event" do
     input = %{
-      "event" => "talking",
-      "userId" => 5
+      "name" => "talking"
     }
 
     response = post(build_conn(), "/api", query: @query, variables: %{"input" => input})
@@ -23,7 +24,46 @@ defmodule UbaxWeb.Schema.Mutation.CreateEventTest do
     assert %{
              "data" => %{
                "createEvent" => %{
-                 "event" => "talking"
+                 "event" => %{
+                   "name" => "talking"
+                 }
+               }
+             }
+           } = json_response(response, 200)
+  end
+
+  @query """
+  mutation createEvent($input: EventInput!){
+
+    createEvent(input: $input) {
+
+      errors {
+        key
+        message
+      }
+      event {
+        name
+      }
+    }
+  }
+  """
+  test "createEvent field creates an event when event less then 3 chars" do
+    input = %{
+      "name" => "t"
+    }
+
+    response = post(build_conn(), "/api", query: @query, variables: %{"input" => input})
+
+    assert %{
+             "data" => %{
+               "createEvent" => %{
+                 "errors" => [
+                   %{
+                     "key" => "name",
+                     "message" => "should be at least 3 character(s)"
+                   }
+                 ],
+                 "event" => nil
                }
              }
            } = json_response(response, 200)

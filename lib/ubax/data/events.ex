@@ -10,20 +10,17 @@ defmodule Ubax.Data.Events do
         query
 
       {:order, order}, query ->
-        from q in query, order_by: {^order, :event}
+        from q in query, order_by: {^order, :id}
 
       {:matching, matching}, query ->
-        from q in query, where: ilike(q.event, ^"%#{matching}%")
+        from q in query, where: ilike(q.name, ^"%#{matching}%")
     end)
     |> Repo.all()
   end
 
   def create_event(attrs \\ %{}) do
-    event =
-      %Event{}
-      |> Event.changeset(attrs)
-      |> Repo.insert()
-
-    {:ok, event}
+    %Event{}
+    |> Event.changeset(attrs)
+    |> Repo.insert()
   end
 end

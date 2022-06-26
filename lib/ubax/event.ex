@@ -4,7 +4,7 @@ defmodule Ubax.Event do
 
   schema "events" do
     field :anonymous_id, :string
-    field :event, :string
+    field :name, :string
     field :user_id, :integer
 
     timestamps()
@@ -13,7 +13,8 @@ defmodule Ubax.Event do
   @doc false
   def changeset(event, attrs) do
     event
-    |> cast(attrs, [:anonymous_id, :user_id, :event])
-    |> validate_required([:user_id, :event])
+    |> cast(attrs, [:anonymous_id, :user_id, :name], empty_values: ["", "NULL"])
+    |> validate_required([:name])
+    |> validate_length(:name, min: 3)
   end
 end

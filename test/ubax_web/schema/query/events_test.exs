@@ -21,10 +21,10 @@ defmodule UbaxWeb.Schema.Query.EventsTest do
              "data" => %{
                "events" => [
                  %{
-                   "user_id" => 2
+                   "user_id" => 1
                  },
                  %{
-                   "user_id" => 1
+                   "user_id" => 2
                  }
                ]
              }
@@ -85,7 +85,7 @@ defmodule UbaxWeb.Schema.Query.EventsTest do
     response = get(build_conn(), "/api", query: @query, variables: @variables)
 
     assert %{
-             "data" => %{"events" => [%{"user_id" => 1} | _]}
+             "data" => %{"events" => [%{"user_id" => 2} | _]}
            } = json_response(response, 200)
   end
 end

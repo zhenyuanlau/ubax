@@ -19,6 +19,6 @@ Repo.insert!(%User{city: "Beijing", company: "CX", gender: "Male"})
 
 Repo.insert!(%User{city: "Shanghai", company: "CX", gender: "Male"})
 
-Repo.insert!(%Event{event: "Working", user_id: 1})
+Repo.insert!(%Event{name: "Working", user_id: 1})
 
-Repo.insert!(%Event{event: "Working", user_id: 2})
+Repo.insert!(%Event{name: "Working", user_id: 2})

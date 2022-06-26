@@ -3,6 +3,7 @@ defmodule Ubax.Repo.Migrations.CreateUsers do
 
   def change do
     create table(:users) do
+      add :name, :string
       add :gender, :string
       add :company, :string
       add :city, :string

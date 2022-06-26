@@ -5,7 +5,7 @@ defmodule Ubax.Repo.Migrations.CreateEvents do
     create table(:events) do
       add :anonymous_id, :string
       add :user_id, :integer
-      add :event, :string
+      add :name, :string
 
       timestamps()
     end

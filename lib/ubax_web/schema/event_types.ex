@@ -13,7 +13,7 @@ defmodule UbaxWeb.Schema.EventTypes do
   end
 
   object :event_mutations do
-    field :create_event, :event do
+    field :create_event, :event_result do
       arg(:input, non_null(:event_input))
       resolve(&Resolvers.Event.create_event/3)
     end
@@ -21,20 +21,25 @@ defmodule UbaxWeb.Schema.EventTypes do
 
   object :event do
     field :id, :id
+    field :name, :string
     field :user_id, :integer
-    field :event, :string
     field :anonymous_id, :string
   end
 
   @desc "Filtering options for the event list"
   input_object :event_filter do
-    field :event, :string
+    field :name, :string
   end
 
   @desc "Event Input Object"
   input_object :event_input do
-    field :event, non_null(:string)
-    field :user_id, non_null(:integer)
+    field :name, non_null(:string)
+    field :user_id, :integer
     field :anonymous_id, :string
+  end
+
+  object :event_result do
+    field :event, :event
+    field :errors, list_of(:input_error)
   end
 end

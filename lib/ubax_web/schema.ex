@@ -14,11 +14,25 @@ defmodule UbaxWeb.Schema do
     import_fields(:event_mutations)
   end
 
-  def middleware(middleware, _field, %{identifier: :mutation}) do
+  def middleware(middleware, field, object) do
+    middleware
+    |> apply(:errors, field, object)
+    |> apply(:debug, field, object)
+  end
+
+  defp apply(middleware, :errors, _field, %{identifier: :mutation}) do
     middleware ++ [Middleware.ChangesetErrors]
   end
 
-  def middleware(middleware, _field, _object) do
+  defp apply(middleware, :debug, _field, _object) do
+    if System.get_env("DEBUG") do
+      [{Middleware.Debug, :start}] ++ middleware
+    else
+      middleware
+    end
+  end
+
+  defp apply(middleware, _, _, _) do
     middleware
   end
 end

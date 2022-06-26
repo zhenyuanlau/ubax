@@ -2,7 +2,6 @@ defmodule UbaxWeb.Schema.EventTypes do
   use Absinthe.Schema.Notation
 
   alias UbaxWeb.Resolvers
-  alias UbaxWeb.Schema.Middleware.ChangesetErrors
 
   object :event_queries do
     @desc "List all events"
@@ -17,7 +16,6 @@ defmodule UbaxWeb.Schema.EventTypes do
     field :create_event, :event_result do
       arg(:input, non_null(:event_input))
       resolve(&Resolvers.Event.create_event/3)
-      middleware(ChangesetErrors)
     end
   end
 
